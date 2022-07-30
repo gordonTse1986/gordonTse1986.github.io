@@ -10,8 +10,8 @@ Vue.component("App", {
         function stopScrolling(e) {
             e.preventDefault();
         }
-        document.addEventListener('touchstart', stopScrolling, false);
-        document.addEventListener('touchmove', stopScrolling, false);
+        document.addEventListener('touchstart', stopScrolling, {passive: false});
+        document.addEventListener('touchmove', stopScrolling, {passive: false});
     },
     computed:{
         componentType(){
