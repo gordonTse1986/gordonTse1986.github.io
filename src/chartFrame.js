@@ -5,7 +5,7 @@ Vue.component("ChartFrame", {
         return {
             chartData: {
               id: 'firstEchart',
-              style: {width: '1100px', height: '750px'},
+              style: {width: '1000px', height: '650px'},
               option:  {
                 tooltip: {
                   trigger: 'axis',
