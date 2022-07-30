@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="./lib/vue.js"></script>
+        <link rel="stylesheet" href="./lib/element-ui.css">
+        <script src="./lib/element-ui.js"></script>
+        <script src="./lib/echarts.js"></script>
+
+        <script src="./rawData.js"></script>
+        <script src="./src/chartWrapper.js"></script>
+        <script src="./src/chartFrame.js"></script>
+        <script src="./src/tableFrame.js"></script>
+        <script src="./app.js"></script>
+
+        <style>
+            .echarts-base {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="script/xtemplate" id="chart-wrapper-template">
+            <div class="echarts-base">
+                <div :id="chartData.id" :style="chartData.style || defaultStyle"></div>
+            </div>
+        </script>
+
+        <script type="script/xtemplate" id="chart-frame-template">
+            <chart-wrapper ref="firstEchart" :chartData="chartData"></chart-wrapper>
+        </script>
+
+        <script type="script/xtemplate" id="table-frame-template">
+            <div>
+                <el-table
+                border
+                stripe
+                :data="tableData"
+                style="width: 100%">
+                    <el-table-column
+                    prop="date"
+                    label="日期"
+                    sortable>
+                    </el-table-column>
+                    <el-table-column
+                    prop="frequency"
+                    label="频率"
+                    sortable>
+                    </el-table-column>
+                    <el-table-column
+                    prop="LEV"
+                    label="LEV">
+                    </el-table-column>
+                    <el-table-column
+                    prop="LCM"
+                    label="LCM">
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                background
+                style="marginTop: 20px"
+                :page-size="pageSize"
+                :total="total"
+                layout="prev, pager, next"
+                @current-change="updateData">
+                </el-pagination>
+             </div>
+        </script>
+
+        <script type="script/xtemplate" id="app-template">
+            <el-container>
+                <el-header style="text-align: right; font-size: 12px">
+                    <el-switch
+                        v-model="value"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                        active-text="走势图"
+                        inactive-text="图表">
+                    </el-switch>
+                </el-header>
+                <el-main>
+                    <keep-alive :includes="keepAlive">
+                        <component :is="componentType"></component>
+                    </keep-alive>
+                </el-main>
+              </el-container>
+            </el-container>
+        </script>
+        
+        <div id="app"></div>
+        
+        <script>
+            new Vue({
+                el: "#app",
+                render:h=>h(Vue.component("App"))
+            });
+        </script>
+    </body>
+</html>
